@@ -37,7 +37,7 @@ function Dashboard() {
                     <ul className="">
                         <ul className="navbar-nav me-auto">
                             <li className="nav-item">
-                                <button className="btn btn-danger" onClick={logout} >Logout</button>
+                                <button className="btn btn-danger" onClick={logout}>Logout</button>
                             </li>
                         </ul>
                     </ul>
@@ -56,7 +56,7 @@ function Dashboard() {
             </div>
 
             <div className="container-fluid fixed-bottom py-3 text-center bg-secondary text-light">
-                Copyright &copy Zerix-2277
+                Copyright &copy; Zerix-2277
             </div>
         </>
     );

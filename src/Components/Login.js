@@ -1,26 +1,49 @@
-import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import Axios from "axios";
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [Validasi, setValidasi] = useState('')
+    const [status, setStatus] = useState('')
+    let navigate = useNavigate();
+
     const Login = () => {
         // console.log(username, password);
 
         // cek usename
         if (username === '') {
-            setValidasi('isi username dan password terlebih dahulu')
+            setStatus('isi username dan password terlebih dahulu')
         } else if (password === '') {
-            setValidasi('password nya?')
+            setStatus('password nya?')
 
 
-        } else {
             // proses login ketika data sudah tervalidasi
+        } else {
+            Axios.post("http://localhost:3001/login", {
+                username: username,
+                password: password,
+
+            }).then((Response) => {
+                if (Response.data.message) {
+                    setStatus(Response.data.message);
+                } else {
+                    sessionStorage.setItem('token', Response.data);
+                    navigate('/dashboard');
+                }
+            })
 
         }
     }
 
+    useEffect(() => {
+        if (sessionStorage.getItem("token") === null) {
+            navigate('/')
+        } else {
+            navigate('/dashboard')
+        }
+    }, [navigate])
 
     return (
         <>
@@ -38,7 +61,7 @@ function Login() {
                 <div className='form-group'>
                     <label>password</label>
                     <input type='password' className="form-control" onChange={(e) => { setPassword(e.target.value) }} ></input>
-                    <div className="text-danger" onChange={() => setValidasi(Validasi)} >{Validasi}</div>
+                    <div className="text-danger" onChange={() => setStatus(Validasi)} >{status}</div>
                 </div>
 
 

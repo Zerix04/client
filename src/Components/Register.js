@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 
 function Register() {
@@ -7,6 +7,7 @@ function Register() {
     const [password, setPassword] = useState('');
     const [nama, setNama] = useState('');
     const [Validasi, setValidasi] = useState('')
+    let navigate = useNavigate();
     const Register = () => {
         // console.log(username, password);
 
@@ -25,11 +26,13 @@ function Register() {
             Axios.post('http://localhost:3001/register', {
                 username: username,
                 password: password,
-                nama: nama
+                nama: nama,
 
+            }).then((Response) => {
+                console.log(Response)
             })
 
-
+            navigate('/')
         }
 
 
